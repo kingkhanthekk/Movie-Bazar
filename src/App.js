@@ -55,18 +55,25 @@ const App = () => {
 
   return (
     <>
-      <NavBar movies={movies} />
-      <Main movies={movies} />
+      <NavBar>
+        <Input />
+        <NumResults movies={movies} />
+      </NavBar>
+      <Main>
+        <ListBox>
+          <MovieList movies={movies} />
+        </ListBox>
+        <WatchedBox />
+      </Main>
     </>
   );
 };
 
-const NavBar = ({ movies }) => {
+const NavBar = ({ children }) => {
   return (
     <nav className="nav-bar">
       <Logo />
-      <Input />
-      <NumResults movies={movies} />
+      {children}
     </nav>
   );
 };
@@ -102,16 +109,11 @@ const NumResults = ({ movies }) => {
   );
 };
 
-const Main = ({ movies }) => {
-  return (
-    <main className="main">
-      <ListBox movies={movies} />
-      <WatchedBox />
-    </main>
-  );
+const Main = ({ children }) => {
+  return <main className="main">{children}</main>;
 };
 
-const ListBox = ({ movies }) => {
+const ListBox = ({ children }) => {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -122,7 +124,7 @@ const ListBox = ({ movies }) => {
       >
         {isOpen1 ? "–" : "+"}
       </button>
-      {isOpen1 && <MovieList movies={movies} />}
+      {isOpen1 && children}
     </div>
   );
 };
