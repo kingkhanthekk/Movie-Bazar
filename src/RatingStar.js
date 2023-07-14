@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const containerStyle = {
   display: "flex",
@@ -39,6 +40,10 @@ const RatingStar = ({ maxRating = 5, color = "#fcc419", size = 48 }) => {
       <p style={textStyle}>{tempRating || rating || ""}</p>
     </div>
   );
+};
+
+RatingStar.propTypes = {
+  maxRating: PropTypes.number,
 };
 
 const Star = ({ onRating, full, onHoverIn, onHoverOut, size, color }) => {
