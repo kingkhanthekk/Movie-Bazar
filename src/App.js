@@ -73,7 +73,9 @@ const App = () => {
 
         setMovies(data.Search);
       } catch (e) {
-        setError(e.message);
+        e.message === "Error is not a constructor"
+          ? setError("Movie not found.")
+          : setError(e.message);
       } finally {
         setIsLoading(false);
       }
