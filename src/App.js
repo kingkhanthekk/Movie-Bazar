@@ -62,6 +62,7 @@ const App = () => {
     async function fetchMovie() {
       try {
         setIsLoading(true);
+        setError("");
         const res = await fetch(
           `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
         );
