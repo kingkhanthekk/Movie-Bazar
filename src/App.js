@@ -54,14 +54,17 @@ const API_KEY = "2f8badc";
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchMovie() {
+      setIsLoading(true);
       const res = await fetch(
         `http://www.omdbapi.com/?apikey=${API_KEY}&s=Inception`
       );
       const data = await res.json();
       setMovies(data.Search);
+      setIsLoading(false);
     }
     fetchMovie();
   }, []);
@@ -73,9 +76,7 @@ const App = () => {
         <NumResults movies={movies} />
       </NavBar>
       <Main>
-        <Box>
-          <MovieList movies={movies} />
-        </Box>
+        <Box>{isLoading ? <Loading /> : <MovieList movies={movies} />}</Box>
         <Box>
           <Summary watched={watched} />
           <WatchedMovieList watched={watched} />
@@ -83,6 +84,10 @@ const App = () => {
       </Main>
     </>
   );
+};
+
+const Loading = () => {
+  return <p className="loader">Loading...</p>;
 };
 
 const NavBar = ({ children }) => {
