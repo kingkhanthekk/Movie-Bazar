@@ -52,14 +52,19 @@ const average = (arr) =>
 const API_KEY = "2f8badc";
 
 const App = () => {
-  useEffect(() => {
-    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=Inception`)
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }, []);
-
-  const [movies, setMovies] = useState(tempMovieData);
+  const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
+
+  useEffect(() => {
+    async function fetchMovie() {
+      const res = await fetch(
+        `http://www.omdbapi.com/?apikey=${API_KEY}&s=Inception`
+      );
+      const data = await res.json();
+      setMovies(data.Search);
+    }
+    fetchMovie();
+  }, []);
 
   return (
     <>
