@@ -56,13 +56,14 @@ const App = () => {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     async function fetchMovie() {
       try {
         setIsLoading(true);
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${API_KEY}&s=djhgaHFG`
+          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
         );
 
         if (!res.ok) throw new Error("Failed to fetch movies.");
@@ -81,12 +82,12 @@ const App = () => {
       }
     }
     fetchMovie();
-  }, []);
+  }, [query]);
 
   return (
     <>
       <NavBar>
-        <Input />
+        <Input query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
       <Main>
@@ -135,9 +136,7 @@ const Logo = () => {
   );
 };
 
-const Input = () => {
-  const [query, setQuery] = useState("");
-
+const Input = ({ query, setQuery }) => {
   return (
     <input
       className="search"
