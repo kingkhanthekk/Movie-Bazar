@@ -67,7 +67,7 @@ const App = () => {
           `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
         );
 
-        if (!res.ok) throw new Error("Failed to fetch movies.");
+        if (!res.ok) throw new Error();
 
         const data = await res.json();
 
@@ -75,6 +75,7 @@ const App = () => {
 
         setMovies(data.Search);
       } catch (e) {
+        console.log(e);
         e.message === "Error is not a constructor"
           ? setError("Movie not found.")
           : setError(e.message);
