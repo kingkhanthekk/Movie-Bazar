@@ -65,7 +65,7 @@ const App = () => {
           `http://www.omdbapi.com/?apikey=${API_KEY}&s=Inception`
         );
 
-        if (!res) throw new Error("Failed to fetch movies.");
+        if (!res.ok) throw new Error("Failed to fetch movies.");
 
         const data = await res.json();
         setMovies(data.Search);
