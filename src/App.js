@@ -62,12 +62,15 @@ const App = () => {
       try {
         setIsLoading(true);
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${API_KEY}&s=Inception`
+          `http://www.omdbapi.com/?apikey=${API_KEY}&s=djhgaHFG`
         );
 
         if (!res.ok) throw new Error("Failed to fetch movies.");
 
         const data = await res.json();
+
+        if (data.Response === "False") throw new Error("Movie not found.");
+
         setMovies(data.Search);
       } catch (e) {
         setError(e.message);
