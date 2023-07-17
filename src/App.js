@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import RatingStar from "./RatingStar";
 
 const tempMovieData = [
   {
@@ -264,7 +265,11 @@ const MovieDetails = ({ selectedID, setSelectedID }) => {
           </p>
         </div>
       </header>
+
       <section>
+        <div className="rating">
+          <RatingStar maxRating={10} size={24} />
+        </div>
         <p>
           <em>{selectedMovie.Plot}</em>
         </p>
