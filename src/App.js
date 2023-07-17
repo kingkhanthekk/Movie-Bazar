@@ -54,7 +54,7 @@ const API_KEY = "2f8badc";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
@@ -114,6 +114,7 @@ const App = () => {
             <MovieDetails
               selectedID={selectedID}
               setSelectedID={setSelectedID}
+              setWatched={setWatched}
             />
           ) : (
             <>
@@ -225,9 +226,22 @@ const Movie = ({ movie, setSelectedID }) => {
   );
 };
 
-const MovieDetails = ({ selectedID, setSelectedID }) => {
+const MovieDetails = ({ selectedID, setSelectedID, setWatched }) => {
   const [selectedMovie, setSelectedMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleWatched = () => {
+    const newMovie = {
+      imdbID: selectedID,
+      poster: selectedMovie.Poster,
+      title: selectedMovie.Title,
+      imdbRating: Number(selectedMovie.imdbRating),
+      year: selectedMovie.Year,
+      runtime: Number(selectedMovie.Runtime.split(" ").at(0)),
+    };
+
+    setWatched((watched) => [...watched, newMovie]);
+  };
 
   useEffect(() => {
     async function fetchDetails() {
@@ -276,6 +290,9 @@ const MovieDetails = ({ selectedID, setSelectedID }) => {
             <div className="rating">
               <RatingStar maxRating={10} size={24} />
             </div>
+            <button className="btn-add" onClick={handleWatched}>
+              + Add to watch list
+            </button>
             <p>
               <em>{selectedMovie.Plot}</em>
             </p>
@@ -331,8 +348,8 @@ const WatchedMovieList = ({ watched }) => {
 const WatchedMovie = ({ movie }) => {
   return (
     <li key={movie.imdbID}>
-      <img src={movie.Poster} alt={`${movie.Title} poster`} />
-      <h3>{movie.Title}</h3>
+      <img src={movie.poster} alt={`${movie.title} poster`} />
+      <h3>{movie.title}</h3>
       <div>
         <p>
           <span>⭐️</span>
