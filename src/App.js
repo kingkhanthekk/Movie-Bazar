@@ -241,6 +241,7 @@ const MovieDetails = ({ selectedID, setSelectedID, setWatched }) => {
     };
 
     setWatched((watched) => [...watched, newMovie]);
+    setSelectedID(null);
   };
 
   useEffect(() => {
