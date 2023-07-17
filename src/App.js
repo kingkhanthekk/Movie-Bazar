@@ -206,7 +206,12 @@ const MovieList = ({ movies, setSelectedID }) => {
 
 const Movie = ({ movie, setSelectedID }) => {
   return (
-    <li key={movie.imdbID} onClick={() => setSelectedID(movie.imdbID)}>
+    <li
+      key={movie.imdbID}
+      onClick={() =>
+        setSelectedID((id) => (id === movie.imdbID ? null : movie.imdbID))
+      }
+    >
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
