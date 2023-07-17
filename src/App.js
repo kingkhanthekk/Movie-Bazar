@@ -115,6 +115,7 @@ const App = () => {
               selectedID={selectedID}
               setSelectedID={setSelectedID}
               setWatched={setWatched}
+              watched={watched}
             />
           ) : (
             <>
@@ -226,10 +227,12 @@ const Movie = ({ movie, setSelectedID }) => {
   );
 };
 
-const MovieDetails = ({ selectedID, setSelectedID, setWatched }) => {
+const MovieDetails = ({ watched, selectedID, setSelectedID, setWatched }) => {
   const [selectedMovie, setSelectedMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState(0);
+
+  const isWatched = watched.map((movie) => movie.imdbID).includes(selectedID);
 
   const handleWatched = () => {
     const newMovie = {
@@ -253,7 +256,7 @@ const MovieDetails = ({ selectedID, setSelectedID, setWatched }) => {
         `http://www.omdbapi.com/?apikey=${API_KEY}&i=${selectedID}`
       );
 
-      if (!res.ok) throw new Error();
+      // if (!res.ok) throw new Error();
 
       const data = await res.json();
       setIsLoading(false);
@@ -291,17 +294,24 @@ const MovieDetails = ({ selectedID, setSelectedID, setWatched }) => {
 
           <section>
             <div className="rating">
-              <RatingStar
-                maxRating={10}
-                size={24}
-                onSetRating={setUserRating}
-              />
+              {isWatched ? (
+                <p>You already rated this movie.</p>
+              ) : (
+                <>
+                  <RatingStar
+                    maxRating={10}
+                    size={24}
+                    onSetRating={setUserRating}
+                  />
+
+                  {userRating > 0 && (
+                    <button className="btn-add" onClick={handleWatched}>
+                      + Add to watch list
+                    </button>
+                  )}
+                </>
+              )}
             </div>
-            {userRating > 0 && (
-              <button className="btn-add" onClick={handleWatched}>
-                + Add to watch list
-              </button>
-            )}
             <p>
               <em>{selectedMovie.Plot}</em>
             </p>
