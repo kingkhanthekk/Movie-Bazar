@@ -11,9 +11,19 @@ const starContainerStyle = {
   display: "flex",
 };
 
-const RatingStar = ({ maxRating = 5, color = "#fcc419", size = 48 }) => {
+const RatingStar = ({
+  maxRating = 5,
+  color = "#fcc419",
+  size = 48,
+  onSetRating,
+}) => {
   const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);
+
+  const handleRating = (rating) => {
+    setRating(rating);
+    onSetRating(rating);
+  };
 
   const textStyle = {
     lineHeight: "1",
@@ -28,7 +38,7 @@ const RatingStar = ({ maxRating = 5, color = "#fcc419", size = 48 }) => {
         {Array.from({ length: maxRating }, (v, i) => (
           <Star
             key={i}
-            onRating={() => setRating(i + 1)}
+            onRating={() => handleRating(i + 1)}
             full={tempRating ? i + 1 <= tempRating : i + 1 <= rating}
             onHoverIn={() => setTempRating(i + 1)}
             onHoverOut={() => setTempRating(0)}

@@ -229,6 +229,7 @@ const Movie = ({ movie, setSelectedID }) => {
 const MovieDetails = ({ selectedID, setSelectedID, setWatched }) => {
   const [selectedMovie, setSelectedMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [userRating, setUserRating] = useState(0);
 
   const handleWatched = () => {
     const newMovie = {
@@ -238,6 +239,7 @@ const MovieDetails = ({ selectedID, setSelectedID, setWatched }) => {
       imdbRating: Number(selectedMovie.imdbRating),
       year: selectedMovie.Year,
       runtime: Number(selectedMovie.Runtime.split(" ").at(0)),
+      userRating,
     };
 
     setWatched((watched) => [...watched, newMovie]);
@@ -289,7 +291,11 @@ const MovieDetails = ({ selectedID, setSelectedID, setWatched }) => {
 
           <section>
             <div className="rating">
-              <RatingStar maxRating={10} size={24} />
+              <RatingStar
+                maxRating={10}
+                size={24}
+                onSetRating={setUserRating}
+              />
             </div>
             <button className="btn-add" onClick={handleWatched}>
               + Add to watch list
