@@ -264,6 +264,13 @@ const MovieDetails = ({ selectedID, setSelectedID }) => {
           </p>
         </div>
       </header>
+      <section>
+        <p>
+          <em>{selectedMovie.Plot}</em>
+        </p>
+        <p>Starring {selectedMovie.Actors}</p>
+        <p>Directed by {selectedMovie.Director}</p>
+      </section>
     </div>
   );
 };
