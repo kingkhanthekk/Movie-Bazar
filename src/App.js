@@ -57,6 +57,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
+  const [selectedID, setSelectedID] = useState(null);
 
   useEffect(() => {
     async function fetchMovie() {
@@ -103,11 +104,19 @@ const App = () => {
         <Box>
           {isLoading && <Loading />}
           {error && <Error error={error} />}
-          {!isLoading && !error && <MovieList movies={movies} />}
+          {!isLoading && !error && (
+            <MovieList movies={movies} setSelectedID={setSelectedID} />
+          )}
         </Box>
         <Box>
-          <Summary watched={watched} />
-          <WatchedMovieList watched={watched} />
+          {selectedID ? (
+            <MovieDetails selectedID={selectedID} />
+          ) : (
+            <>
+              <Summary watched={watched} />
+              <WatchedMovieList watched={watched} />
+            </>
+          )}
         </Box>
       </Main>
     </>
@@ -182,19 +191,19 @@ const Box = ({ children }) => {
   );
 };
 
-const MovieList = ({ movies }) => {
+const MovieList = ({ movies, setSelectedID }) => {
   return (
     <ul className="list list-movies">
       {movies?.map((movie) => (
-        <Movie movie={movie} key={movie.imdbID} />
+        <Movie movie={movie} key={movie.imdbID} setSelectedID={setSelectedID} />
       ))}
     </ul>
   );
 };
 
-const Movie = ({ movie }) => {
+const Movie = ({ movie, setSelectedID }) => {
   return (
-    <li key={movie.imdbID}>
+    <li key={movie.imdbID} onClick={() => setSelectedID(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
@@ -205,6 +214,10 @@ const Movie = ({ movie }) => {
       </div>
     </li>
   );
+};
+
+const MovieDetails = ({ selectedID }) => {
+  return <div className="details">{selectedID}</div>;
 };
 
 const Summary = ({ watched }) => {
