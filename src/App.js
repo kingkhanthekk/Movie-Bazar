@@ -120,7 +120,7 @@ const App = () => {
           ) : (
             <>
               <Summary watched={watched} />
-              <WatchedMovieList watched={watched} />
+              <WatchedMovieList watched={watched} setWatched={setWatched} />
             </>
           )}
         </Box>
@@ -359,17 +359,25 @@ const Summary = ({ watched }) => {
   );
 };
 
-const WatchedMovieList = ({ watched }) => {
+const WatchedMovieList = ({ watched, setWatched }) => {
   return (
     <ul className="list">
       {watched.map((movie) => (
-        <WatchedMovie movie={movie} key={movie.imdbID} />
+        <WatchedMovie
+          movie={movie}
+          key={movie.imdbID}
+          setWatched={setWatched}
+        />
       ))}
     </ul>
   );
 };
 
-const WatchedMovie = ({ movie }) => {
+const WatchedMovie = ({ movie, setWatched }) => {
+  const handleWatchedDelete = (id) => {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+  };
+
   return (
     <li key={movie.imdbID}>
       <img src={movie.poster} alt={`${movie.title} poster`} />
@@ -387,6 +395,12 @@ const WatchedMovie = ({ movie }) => {
           <span>⏳</span>
           <span>{movie.runtime} min</span>
         </p>
+        <button
+          className="btn-delete"
+          onClick={() => handleWatchedDelete(movie.imdbID)}
+        >
+          X
+        </button>
       </div>
     </li>
   );
