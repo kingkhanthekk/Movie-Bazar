@@ -297,9 +297,11 @@ const MovieDetails = ({ selectedID, setSelectedID, setWatched }) => {
                 onSetRating={setUserRating}
               />
             </div>
-            <button className="btn-add" onClick={handleWatched}>
-              + Add to watch list
-            </button>
+            {userRating > 0 && (
+              <button className="btn-add" onClick={handleWatched}>
+                + Add to watch list
+              </button>
+            )}
             <p>
               <em>{selectedMovie.Plot}</em>
             </p>
