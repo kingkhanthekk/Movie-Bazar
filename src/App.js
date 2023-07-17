@@ -110,7 +110,10 @@ const App = () => {
         </Box>
         <Box>
           {selectedID ? (
-            <MovieDetails selectedID={selectedID} />
+            <MovieDetails
+              selectedID={selectedID}
+              setSelectedID={setSelectedID}
+            />
           ) : (
             <>
               <Summary watched={watched} />
@@ -216,8 +219,15 @@ const Movie = ({ movie, setSelectedID }) => {
   );
 };
 
-const MovieDetails = ({ selectedID }) => {
-  return <div className="details">{selectedID}</div>;
+const MovieDetails = ({ selectedID, setSelectedID }) => {
+  return (
+    <div className="details">
+      <button className="btn-back" onClick={() => setSelectedID(null)}>
+        &larr;
+      </button>
+      {selectedID}
+    </div>
+  );
 };
 
 const Summary = ({ watched }) => {
