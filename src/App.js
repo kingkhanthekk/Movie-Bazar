@@ -233,6 +233,9 @@ const MovieDetails = ({ watched, selectedID, setSelectedID, setWatched }) => {
   const [userRating, setUserRating] = useState(0);
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedID);
+  const userRated = watched.find(
+    (movie) => movie.imdbID === selectedID
+  )?.userRating;
 
   const handleWatched = () => {
     const newMovie = {
@@ -295,7 +298,9 @@ const MovieDetails = ({ watched, selectedID, setSelectedID, setWatched }) => {
           <section>
             <div className="rating">
               {isWatched ? (
-                <p>You already rated this movie.</p>
+                <p>
+                  You already rated this movie {userRated} <span>⭐</span>
+                </p>
               ) : (
                 <>
                   <RatingStar
