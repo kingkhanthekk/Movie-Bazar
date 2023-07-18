@@ -290,6 +290,15 @@ const MovieDetails = ({ watched, selectedID, setSelectedID, setWatched }) => {
     };
   }, [selectedMovie.Title]);
 
+  //Close movie details on Escape keypress
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Escape") {
+        setSelectedID(null);
+      }
+    });
+  });
+
   return (
     <div className="details">
       {isLoading ? (
