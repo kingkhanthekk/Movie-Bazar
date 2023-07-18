@@ -60,13 +60,17 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [selectedID, setSelectedID] = useState(null);
 
+  //Fetch movie data by search keyword
   useEffect(() => {
+    const controller = new AbortController();
+
     async function fetchMovie() {
       try {
         setIsLoading(true);
         setError("");
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`,
+          { signal: controller.signal }
         );
 
         if (!res.ok) throw new Error();
@@ -93,6 +97,10 @@ const App = () => {
     }
 
     fetchMovie();
+
+    return () => {
+      controller.abort();
+    };
   }, [query]);
 
   return (
