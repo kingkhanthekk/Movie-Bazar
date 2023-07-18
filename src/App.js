@@ -252,6 +252,7 @@ const MovieDetails = ({ watched, selectedID, setSelectedID, setWatched }) => {
     setSelectedID(null);
   };
 
+  //Fetch movie details by id
   useEffect(() => {
     async function fetchDetails() {
       setIsLoading(true);
@@ -268,6 +269,12 @@ const MovieDetails = ({ watched, selectedID, setSelectedID, setWatched }) => {
 
     fetchDetails();
   }, [selectedID]);
+
+  //Change page title according to selected movie
+  useEffect(() => {
+    if (!selectedMovie.Title) return;
+    document.title = `Movie | ${selectedMovie.Title}`;
+  }, [selectedMovie.Title]);
 
   return (
     <div className="details">
