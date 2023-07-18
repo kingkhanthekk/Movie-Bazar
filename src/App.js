@@ -292,11 +292,17 @@ const MovieDetails = ({ watched, selectedID, setSelectedID, setWatched }) => {
 
   //Close movie details on Escape keypress
   useEffect(() => {
-    document.addEventListener("keydown", (e) => {
+    const callback = (e) => {
       if (e.code === "Escape") {
         setSelectedID(null);
       }
-    });
+    };
+
+    document.addEventListener("keydown", callback);
+
+    return () => {
+      document.removeEventListener("keydown", callback);
+    };
   });
 
   return (
