@@ -274,6 +274,10 @@ const MovieDetails = ({ watched, selectedID, setSelectedID, setWatched }) => {
   useEffect(() => {
     if (!selectedMovie.Title) return;
     document.title = `Movie | ${selectedMovie.Title}`;
+
+    return () => {
+      document.title = "Movie Bazar";
+    };
   }, [selectedMovie.Title]);
 
   return (
