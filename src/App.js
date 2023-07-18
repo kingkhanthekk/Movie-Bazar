@@ -98,6 +98,7 @@ const App = () => {
       return;
     }
 
+    setSelectedID(null);
     fetchMovie();
 
     return () => {
